@@ -63,5 +63,6 @@ NotifyClamd /usr/local/clamav/etc/clamd.conf
 5. 업데이트
 /usr/local/clamav/bin/freshclam
 
-6./usr/local/clamav/bin/clamscan -ir / clamscanresult.txt
+6.
+/usr/local/clamav/bin/clamscan -ir / clamscanresult.txt
 
