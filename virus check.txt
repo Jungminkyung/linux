@@ -1,0 +1,67 @@
+
+===============================================
+이방법에서는 바이러스 db업데이트 기능인 freshclam이 설치되지 않음.
+
+yum install clamav
+clamscan -ir / > clamscan.txt
+
+/usr/local/clamav/bin/clamscan -ri /dir     디렉토리 (하위포함) 를 스캔하여 감염된 파일을 화면 출력
+/usr/local/clamav/bin/clamscan -ri --move=/home/infected    /dir
+디렉토리 (하위포함) 를 스캔하고 감염된 파일을 /home/infected/로 이동. 이때 /home/infected 폴더는 생성되어있어야한다.
+
+
+================================================
+이방법은 소스설치로, 바이러스db업데이트 기능이 가능함. 
+
+다운 
+http://sourceforge.net/projects/clamav/files/clamav/0.98/clamav-0.98.tar.gz/download?use_mirror=jaist
+
+2. 설치하기 
+tar xvfz clamav-0.98.tar.gz
+adduser clamav
+cd ./clamav-0.97.5
+./configure --enable-static --prefix=/usr/local/clamav
+make && make install
+
+3. 디렉토리 생성 및 권한주기
+mkdir /usr/local/clamav/db
+mkdir /usr/local/clamav/log
+chmod 757 /usr/local/clamav/db
+chmod 757 /usr/local/clamav/log
+mkdir /var/run/clamav
+
+4. 환경설정
+vi /usr/local/clamav/etc/clamd.conf
+해서
+
+LocalSocket /var/run/clamav/clamd.socket
+FixStaleSocket yes
+TCPSocket 3310
+TCPAddr 127.0.0.1
+MaxThreads 20
+User clamav
+LogFile /usr/local/clamav/log/clamd.log
+LogTime yes
+PidFile /usr/local/clamav/log/clamd.pid
+DatabaseDirectory /usr/local/clamav/db
+DetectBrokenExecutables yes
+
+한 후 wq
+
+vi /usr/local/clamav/etc/freshclam.conf
+해서
+
+DatabaseMirror database.clamav.net
+DatabaseDirectory /usr/local/clamav/db/
+UpdateLogFile /usr/local/clamav/log/freshclam.log
+DatabaseOwner clamav
+NotifyClamd /usr/local/clamav/etc/clamd.conf
+
+한 후 wq
+
+
+5. 업데이트
+/usr/local/clamav/bin/freshclam
+
+6./usr/local/clamav/bin/clamscan -ir / clamscanresult.txt
+
