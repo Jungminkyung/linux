@@ -1,3 +1,5 @@
+rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
 yum install fail2ban
 
 /etc/fail2ban/jail.conf
