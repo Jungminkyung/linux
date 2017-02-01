@@ -3,7 +3,7 @@ rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 yum install fail2ban
 
 /etc/fail2ban/jail.conf
-ignoreip 차단안되는아이피
+ignoreip 차단안되는아이피 127.0.0.1/8 x.x.x.x y.y.y.y
 bantime = 차단시간(초) 86400
 findtime = 수집기간초 60(1분동안)
 maxretry = 3 (수집기간동안몇번시도실패시)
