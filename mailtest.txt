@@ -1,0 +1,14 @@
+telnet localhost 25
+
+EHLO test.com
+
+MAIL FROM:발신이메일
+
+RCPT TO:수신이메일
+
+DATA
+SUBJECT:Test Mail
+This is Test Mail
+.
+
+    
