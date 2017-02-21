@@ -1,0 +1,36 @@
+도커 사용법
+
+ 설치 wget -qO- https://get.docker.com/ | sh
+ service docker start
+
+ 테스트 
+      검색
+      docker search centos
+      다운로드
+      docker pull ubuntu
+      리스트 출력
+      docker images 
+      실행해보기
+      docker run -i -t --name hello ubuntu /bin/bash
+      컨테이너 목록 출력
+      docker ps -a
+      정지한 도커를 다시 실행하기
+      docker start hello
+      재부팅시키기
+      docker restart hello
+      배쉬셀이 아닌형태로 실행시키기
+      docker exec hello echo "Hello world"
+      docker ps
+
+변경한 도커를 이미지파일로 만들기(커밋)
+docker commit e2af61 ubuntu:git  (docker ps 에서 나온 컨테이너아이디를 입력해줌)
+
+이미지를 옮길때 
+docker save -o <save image to path> <image name>
+docker load -i <path to image tar file>
+
+
+
+참고사이트 
+http://www.slideshare.net/pyrasis/docker-fordummies-44424016
+http://blog.nacyot.com/articles/2014-01-27-easy-deploy-with-docker/
