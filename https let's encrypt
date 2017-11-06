@@ -1,0 +1,49 @@
+Test : https://www.ssllabs.com/ssltest/analyze.html?d=www.9interview.com
+
+1.Install & letsencrypt-auto
+                  https://blog.outsider.ne.kr/1178
+                           
+2.ssl.conf Reference 
+                  https://www.enteroa.com/2016/03/12/lets-encrypt-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%9A%B4%EC%9A%A9centos/comment-page-1/
+                  https://www.comodossl.co.kr/certificate/ssl-installation-guides/Apache-csr-crt.aspx
+                  
+             
+
+소스다운
+git clone https://github.com/letsencrypt/letsencrypt
+
+이동후 설치
+./letsencrypt-auto --help
+
+아파치 설치
+./letsencrypt-auto certonly --apache
+
+아파치 설치하니 도메인이 자동으로 셋팅되어버려서 수동진행
+
+./letsencrypt-auto certonly --manual (메시지에 나오는 해당위치에 폴더를 만들고 파일이름과 내용을 지정해준다음 진행해야함)
+
+OK가 뜬다면 메시지의 위치에 파일이 4개가 생긴다.
+
+
+
+최종적으로 구동된 셋팅 ssl.conf
+
+SSLProtocol            ALL -SSLv2 -SSLv3
+SSLCipherSuite         ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK
+SSLHonorCipherOrder    on
+ 
+Listen 443
+<VirtualHost *:443>
+DocumentRoot 웹루트
+ServerName 풀도메인
+SSLEngine on
+SSLCertificateFile /etc/letsencrypt/live/www.9interview.com/cert.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/www.9interview.com/privkey.pem
+SSLCertificateChainFile /etc/letsencrypt/live/www.9interview.com/chain.pem
+SSLCACertificateFile /etc/letsencrypt/live/www.9interview.com/fullchain.pem
+Header always set Strict-Transport-Security "max-age=15552000"
+</VirtualHost>
+
+아파치 재시작
+
+
