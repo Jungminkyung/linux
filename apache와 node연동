@@ -1,0 +1,49 @@
+Let's encrypt를 사용해서
+
+apache에 인증서설치 www.selfview.com
+apache에 인증서2설치 node.selfview.com
+
+노드로 돌릴 인증서2를 프록시로 연결한다. 연결할때는 https가 아니라 http이면 된다.
+
+
+SSLProtocol            ALL -SSLv2 -SSLv3
+SSLCipherSuite         ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK
+SSLHonorCipherOrder    on
+
+Listen 443
+<VirtualHost *:443>
+    DocumentRoot /data/selfin/public
+    ServerName www.selfview.com
+    SSLEngine on
+    SSLCertificateFile /etc/letsencrypt/live/www.selfview.com/cert.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/www.selfview.com/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/www.selfview.com/fullchain.pem
+    SSLCACertificateFile /etc/letsencrypt/live/www.selfview.com/chain.pem
+    Header always set Strict-Transport-Security "max-age=15552000"
+
+    ErrorLog /var/log/httpd/error.log
+    CustomLog /var/log/httpd/access.log combined
+</VirtualHost>
+<VirtualHost *:443>
+    DocumentRoot /data/selfin/public
+    ServerName node.selfview.com
+    SSLEngine on
+    SSLCertificateFile /etc/letsencrypt/live/node.selfview.com/cert.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/node.selfview.com/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/node.selfview.com/fullchain.pem
+    SSLCACertificateFile /etc/letsencrypt/live/node.selfview.com/chain.pem
+    Header always set Strict-Transport-Security "max-age=15552000"
+
+    ErrorLog /var/log/httpd/error.log
+    CustomLog /var/log/httpd/access.log combined
+    <Location />
+            ProxyPass http://localhost:3000/
+            ProxyPassReverse http://localhost:3000/
+    </Location>
+</VirtualHost>
+
+
+노드 서버쪽은 따로 작업할것이 없다.
+app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+});
