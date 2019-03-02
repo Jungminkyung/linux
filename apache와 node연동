@@ -47,3 +47,7 @@ Listen 443
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
+
+
+무료인증서 발급받기 http://trandent.com/article/Etc/detail/740
+노드js 서버에 인증서 설치 http://trandent.com/article/nodejs/detail/742
