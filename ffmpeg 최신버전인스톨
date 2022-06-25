@@ -1,0 +1,9 @@
+ yum instal epel-release
+    4  yum install epel-release
+    5  yum install dnf
+    6  dnf
+    7  dnf install --nogpgcheck --nogpgcheck https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
+    8  출처: https://yonglimlee.tistory.com/entry/centos7-ffmpeg-설치-오류 [이노키🌿:티스토리]
+    9  dnf install --nogpgcheck https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm
+   10  yum install ffmpeg ffmpeg-devel
+   11  ffmpeg
