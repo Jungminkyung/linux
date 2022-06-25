@@ -32,8 +32,13 @@ endfor
 /data/praat pitchIntensity.praat.script 1.wav
 
 
+설치 
+yum install gtk2-devel pulseaudio-libs-devel alsa-lib-devel jack-audio-connection-kit-devel
+yum --enablerepo=extras install centos-release-scl
+yum install devtoolset-7
+scl enable devtoolset-7 bash
 
-설치법
+
 1  cd /data
     2  ls
     3  git clone https://github.com/praat/praat.git
@@ -49,3 +54,4 @@ endfor
    13  ls
    14  praat
    15  history
+
