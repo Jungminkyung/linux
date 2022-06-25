@@ -30,3 +30,22 @@ endfor
 
 
 /data/praat pitchIntensity.praat.script 1.wav
+
+
+
+설치법
+1  cd /data
+    2  ls
+    3  git clone https://github.com/praat/praat.git
+    4  cd praat
+    5  cp makefiles/makefile.defs.linux.pulse ./makefile.defs
+    6  make
+    7  yum install libgtk2.0-dev
+    8  yum install libgtk
+    9  yum install gtk3-devel
+   10  make
+   11  ls
+   12  make install
+   13  ls
+   14  praat
+   15  history
