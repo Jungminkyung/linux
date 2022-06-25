@@ -1,0 +1,32 @@
+pitchIntensity.praat.script
+
+form Test command line calls
+        sentence filename
+        real Beep_duration
+        sentence Second_text
+endform
+Read from file: filename$
+Rename: "Sound"
+sound = selected ("Sound")
+tmin = Get start time
+tmax = Get end time
+#To Pitch (shs): 0.001, 50.0, 15, 1250.0, 15, 0.84, 600.0, 48
+To Pitch: 0.0, 75.0, 600.0
+Rename: "pitch"
+selectObject: sound
+To Intensity: 75, 0.001
+Rename: "intensity"
+#writeInfoLine: "Here are the results:"
+for i to (tmax-tmin)/0.01
+    time = tmin + i * 0.01
+    selectObject: "Pitch pitch"
+    pitch = Get value at time: time, "Hertz", "Linear"
+    selectObject: "Intensity intensity"
+    intensity = Get value at time: time, "Cubic"
+    appendInfoLine: fixed$ (time, 3), " ", fixed$ (pitch, 3), " ", fixed$ (intensity, 3)
+endfor
+
+
+
+
+/data/praat pitchIntensity.praat.script 1.wav
